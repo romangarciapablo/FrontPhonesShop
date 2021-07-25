@@ -47,3 +47,8 @@
 .pageContainer {
     padding: 2rem;
 }
+
+.price {
+    font-size: 2em;
+    font-weight: bold;
+}

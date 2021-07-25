@@ -36,12 +36,12 @@ const ItemDetail = (props) => {
 
     fetch('http://localhost:3050/api/cart/', requestOptions)
       .then(response => {
-        if(response.status===200){
+        if (response.status === 200) {
           props.reloadCartItems();
         }
       });
-      
-    
+
+
 
   }
 
@@ -59,8 +59,22 @@ const ItemDetail = (props) => {
             <h2>
               {phoneInfo.model}
             </h2>
-            <span className="sectionTitle">brand:</span> {phoneInfo.brand}
-          </div>
+            <br />
+            <br />
+            <div className="row">
+              <div className="col-12 col-md-6 imageContainer">
+              <ul>
+                <li><span className="sectionTitle">
+                    brand:
+                  </span> {phoneInfo.brand}</li>
+                <li><span className="sectionTitle">
+                    ram:
+                  </span>
+                  {((phoneInfo.storage || [])[indexStorageSelected] || {}).ram}</li>
+              </ul>
+              </div>
+              <div className="col-12 col-md-6 price">{((phoneInfo.storage || [])[indexStorageSelected] || {}).price+"€"}</div>
+            </div></div>
           <div className="sectionContainer">
             <div className="row"><span className="sectionTitle">colors:</span> <div className="row">
               {phoneInfo && phoneInfo.colors && phoneInfo.colors.map((c, ind) => {

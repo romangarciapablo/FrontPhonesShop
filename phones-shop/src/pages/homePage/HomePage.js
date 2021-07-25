@@ -5,9 +5,12 @@ import FiltersModal from "../../components/FiltersModal"
 const ONE_HOUR = 60 * 60 * 1000
 
 const HomePage = (props) => {
-    const [items, setItems] = useState([])
-    const [filter, setFilter] = useState({text:""})
-    const [flagFilterModal, setFlagFilterModal] = useState(false)
+    const [items, setItems] = useState([]);
+    const [filter, setFilter] = useState({text:""});
+    const [flagFilterModal, setFlagFilterModal] = useState(false);
+    const [diferentBrands, setDiferentBrands] = useState([]);
+    const [diferentColors, setDiferentColors] = useState([]);
+    const [diferentStorages, setDiferentStorages] = useState([]);
     const getCacheData = () => { 
         try {
             const savedData=localStorage.getItem("itemsListCache")
@@ -60,6 +63,30 @@ const HomePage = (props) => {
         
     }, []);
 
+    useEffect(() => {
+        let diferentBrands = [];
+        let diferentColors = [];
+        let diferentStorages = [];
+        items.forEach(i => {
+            if (!diferentBrands.some(brand => brand===i.brand)){
+                diferentBrands.push(i.brand);
+            }
+            i.colors.forEach(c => {
+                if(!diferentColors.some(color => color.id===c.id)){
+                    diferentColors.push({id:c.id, name:c.name})
+                }
+            })
+            i.storage.forEach(s => {
+                if(!diferentStorages.some(storage => storage.id===s.id)){
+                    diferentStorages.push(s)
+                }
+            })
+        })
+        setDiferentBrands(diferentBrands);
+        setDiferentColors(diferentColors);
+        setDiferentStorages(diferentStorages);
+    }, [items])
+
     function onChangeFilter(e) {
         setFilter({...filter, [e.target.name]:e.target.value});
     }
@@ -72,7 +99,12 @@ const HomePage = (props) => {
 
     return (
         <div className="HomePage">
-        <FiltersModal/>
+        <FiltersModal
+            diferentBrands={diferentBrands}
+            diferentColors={diferentColors}
+            diferentStorages={diferentStorages}
+            filter={filter}
+            setFilter={setFilter}/>
         <div className="row pageContainer" >
             <div className="row textSearch">
             <div className="col-12 col-md-6 imageContainer"/>

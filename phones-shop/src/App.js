@@ -41,7 +41,9 @@ function App() {
         if (!phoneMaped.storage.some(s => s.id === phone.storage_id)) {
           phoneMaped.storage.push({
             id: phone.storage_id,
-            storage: phone.storage
+            storage: phone.storage,
+            price: phone.price,
+            ram: phone.ram
           })
         }
       } else {
@@ -55,7 +57,9 @@ function App() {
           }],
           storage: [{
             id: phone.storage_id,
-            storage: phone.storage
+            storage: phone.storage,
+            price: phone.price,
+            ram: phone.ram
           }]
         })
       }
