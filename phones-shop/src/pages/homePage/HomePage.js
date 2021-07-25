@@ -7,7 +7,6 @@ const ONE_HOUR = 60 * 60 * 1000
 const HomePage = (props) => {
     const [items, setItems] = useState([])
     const [filter, setFilter] = useState({text:""})
-    const [user, setUser] = useState()
     const [flagFilterModal, setFlagFilterModal] = useState(false)
     const getCacheData = () => { 
         try {

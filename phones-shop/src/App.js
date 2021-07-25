@@ -8,6 +8,23 @@ import { useFetch } from "./hooks/useFetch"
 function App() {
 
   const [idPhoneSelected, setIdPhoneSelected] = useState();
+  const [user, setUser] = useState({first_name:"User1", last_name:"LNUser1", id:1});
+  const [cartItems, setCartItems] = useState(3);
+
+  useEffect(() => {
+    reloadCartItems();
+  }, []);
+  const reloadCartItems = () => {
+    fetch("http://localhost:3050/api/cart/" + user.id)
+    .then(urlInfo => {
+      return urlInfo.json();
+    })
+    .then(jsonInfo => {
+      
+      setCartItems(jsonInfo[0].numberCartItems||0);
+    })
+
+  }
 
   const convertFetchResponseToObject = (fetchResponse) => {
     let itemsMaped = [];
@@ -51,7 +68,9 @@ function App() {
     pageToRender.push(<ItemDetailPage
       idPhoneSelected={idPhoneSelected}
       backToHomePage={() => setIdPhoneSelected(null)}
-      convertFetchResponseToObject={convertFetchResponseToObject} />);
+      convertFetchResponseToObject={convertFetchResponseToObject}
+      user={user}
+      reloadCartItems={reloadCartItems} />);
   } else {
     pageToRender.push(<HomePage 
       setIdPhoneSelected={setIdPhoneSelected}
@@ -61,7 +80,7 @@ function App() {
   return (
     <div className="App">
       <div className="row">
-        <Header></Header>
+        <Header user={user} setUser={setUser} cartItems={cartItems}></Header>
       </div>
       <div className="row">
         {pageToRender}

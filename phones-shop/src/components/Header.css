@@ -1,0 +1,45 @@
+.Header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(202, 202, 202);
+    padding: 10px 30px;
+}
+
+.logoDiv{
+    display: flex;
+    align-items: center;
+}
+
+.logoDiv img{
+    margin-right: 10px;
+}
+
+.cart{
+    position:relative;
+    padding-top: 30px;
+    padding-right: 30px;
+}
+
+.cart img{
+    transform: scaleX(-1);
+}
+
+.cartItemsNumber{
+    padding: 5px;
+    background-color: rgb(83, 83, 83);
+    color: white;
+    FONT-WEIGHT: BOLD;
+    border-radius: 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+}
+.cartItemsNumber p{
+    margin: 0;
+}

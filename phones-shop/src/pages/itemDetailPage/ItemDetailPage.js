@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import './ItemDetailPage.css';
+
 const ItemDetail = (props) => {
 
   const [phoneInfo, setPhoneInfo] = useState({});
@@ -18,10 +19,36 @@ const ItemDetail = (props) => {
       })
 
   }, []);
-  return (
+
+  const addToCart = () => {
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        "user": props.user.id,
+        "id": props.idPhoneSelected,
+        "colorCode": phoneInfo.colors[indexColorSelected].id,
+        "storageCode": phoneInfo.storage[indexStorageSelected].id
+      })
+    };
+
+
+    fetch('http://localhost:3050/api/cart/', requestOptions)
+      .then(response => {
+        if(response.status===200){
+          props.reloadCartItems();
+        }
+      });
+      
     
+
+  }
+
+  return (
+
     <div className="ItemDetailPage">
-      <button onClick={props.backToHomePage}>back to home page</button>
+      <button type="button" class="btn btn-secondary btn-lg btn-block" onClick={props.backToHomePage}>back to home page</button>
       <div className="row pageContainer" >
         <div className="col-12 col-md-6 imageContainer">
           <img src={(((phoneInfo.colors || [])[indexColorSelected] || {}).image_url)} />
@@ -37,14 +64,11 @@ const ItemDetail = (props) => {
           <div className="sectionContainer">
             <div className="row"><span className="sectionTitle">colors:</span> <div className="row">
               {phoneInfo && phoneInfo.colors && phoneInfo.colors.map((c, ind) => {
-                const classname1 = "colorSelector" + ind == indexColorSelected ? " colorSelected" : "";
-                const classname2 = indexColorSelected === ind ? "colorSelector colorSelected" : "colorSelector";
-                console.log(classname1)
-                console.log(classname2)
-                return <div key={ind} className={classname2} onClick={() => setcIndexColorSelected(ind)} style={{ backgroundColor: c.name || "gray" }}></div>
+                const classnameText = indexColorSelected === ind ? "colorSelector colorSelected" : "colorSelector";
+                return <div key={ind} className={classnameText} onClick={() => setcIndexColorSelected(ind)} style={{ backgroundColor: c.name || "white" }}></div>
               })
               }
-              </div>
+            </div>
               <span className="sectionTitle">storage selected: {((phoneInfo.storage || [])[indexStorageSelected] || {}).storage || ""} </span>
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,7 +81,7 @@ const ItemDetail = (props) => {
                 </div>
               </div>
               <span className="sectionTitle"></span>
-              <button type="button" class="btn btn-secondary btn-lg btn-block">Añadir al carrito</button>
+              <button type="button" class="btn btn-secondary btn-lg btn-block" onClick={addToCart} disabled={!(props.user || {}).id}>Add to cart</button>
             </div>
           </div>
         </div>

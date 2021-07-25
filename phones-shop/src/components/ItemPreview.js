@@ -11,7 +11,7 @@ const ItemPreview = (props) => {
         
     // },Math.random() * (7000 - 3000) + 3000);
 
-    return <div className="card mb-3" style={{maxWidth: '540px'}} onClick={() => props.setIdPhoneSelected(props.item.id)}>
+    return <div className="card mb-3" style={{maxWidth: '540px'}} onMouseEnter={()=>{setIndexColorShow((indexColorShow+1)%props.item.colors.length)}} onClick={() => props.setIdPhoneSelected(props.item.id)}>
         <div className="row g-0">
             <div className="col-md-4">
                 <img src={props.item.colors[indexColorShow].image_url} className="img-fluid rounded-start" alt="..." />
