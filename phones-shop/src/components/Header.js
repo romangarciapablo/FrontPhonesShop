@@ -1,7 +1,12 @@
-import {React} from 'react';
+import { React } from 'react';
 
 const Header = () => {
-  return <h1>Hello World</h1>;
+  return (<>
+  <div className="row">
+        <div className="col-12 col-md-6">Phones Shop</div>
+        <div className="col-12 col-md-6">carrito</div>
+      </div>
+  </>);
 }
 
 export default Header;

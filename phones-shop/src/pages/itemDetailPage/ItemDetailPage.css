@@ -1,0 +1,49 @@
+.imageContainer{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.imageContainer img{
+    max-width: 100%;
+}
+
+.colorSelector{
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 100px;
+    margin: 0 10px;
+    opacity: 90%;
+}
+
+.colorSelected{
+    width: 35px;
+    height: 35px;
+    opacity: 100%;
+    border: 3px solid black;
+}
+
+.colDescriptionAndActions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.sectionContainer {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.sectionTitle {
+    padding-bottom: 5px;
+    border-bottom: 1px solid darkgray;
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.pageContainer {
+    padding: 2rem;
+}

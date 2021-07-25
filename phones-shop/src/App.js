@@ -1,34 +1,71 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
-import Header from './components/Header.js'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Routes from './Routes'
+import Header from './components/Header'
+import HomePage from './pages/homePage/HomePage'
+import ItemDetailPage from './pages/itemDetailPage/ItemDetailPage';
+import { useFetch } from "./hooks/useFetch"
 
 function App() {
-  
-  
+
+  const [idPhoneSelected, setIdPhoneSelected] = useState();
+
+  const convertFetchResponseToObject = (fetchResponse) => {
+    let itemsMaped = [];
+    fetchResponse.forEach(phone => {
+      let phoneMaped = itemsMaped.find(e => e.id === phone.id);
+      if (phoneMaped) {
+        if (!phoneMaped.colors.some(c => c.id === phone.color_id)) {
+          phoneMaped.colors.push({
+            id: phone.color_id,
+            name: phone.color_name,
+            image_url: phone.image_url
+          });
+        }
+        if (!phoneMaped.storage.some(s => s.id === phone.storage_id)) {
+          phoneMaped.storage.push({
+            id: phone.storage_id,
+            storage: phone.storage
+          })
+        }
+      } else {
+        itemsMaped.push({
+          id: phone.id,
+          brand: phone.brand,
+          model: phone.model,
+          colors: [{
+            id: phone.color_id,
+            image_url: phone.image_url
+          }],
+          storage: [{
+            id: phone.storage_id,
+            storage: phone.storage
+          }]
+        })
+      }
+    })
+    return itemsMaped;
+  }
+
+  const pageToRender = [];
+  if (idPhoneSelected != null) {
+    pageToRender.push(<ItemDetailPage
+      idPhoneSelected={idPhoneSelected}
+      backToHomePage={() => setIdPhoneSelected(null)}
+      convertFetchResponseToObject={convertFetchResponseToObject} />);
+  } else {
+    pageToRender.push(<HomePage 
+      setIdPhoneSelected={setIdPhoneSelected}
+      convertFetchResponseToObject={convertFetchResponseToObject} />);
+  }
 
   return (
     <div className="App">
-      {/* Hola maría
-      <button type="button" className="btn btn-primary">caerle bien a maría</button>
-      <Header/>
       <div className="row">
-        HEADER
+        <Header></Header>
       </div>
       <div className="row">
-        <div className="col-12 col-md-6">primera caja</div>
-        <div className="col-12 col-md-6">segunda caja</div>
+        {pageToRender}
       </div>
-      <div>
-        <p>1</p>
-        <p>2</p>
-        <p>3</p>
-        <p>4</p>
-      </div> */}
-      <Router>
-          <Routes/>
-      </Router>
     </div>
   );
 }
