@@ -50,7 +50,7 @@ const HomePage = (props) => {
         if (data) {
             setItems(data);
         } else {
-            fetch("http://localhost:3050/api/product")
+            fetch("http://node-mysql-phones-shop.herokuapp.com/api/product")
             .then(urlInfo => {
                 return urlInfo.json();
             })

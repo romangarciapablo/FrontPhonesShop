@@ -8,7 +8,7 @@ const ItemDetail = (props) => {
   const [indexStorageSelected, setIndexStorageSelected] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:3050/api/product/" + props.idPhoneSelected)
+    fetch("http://node-mysql-phones-shop.herokuapp.com/api/product/" + props.idPhoneSelected)
       .then(urlInfo => {
         return urlInfo.json();
       })
@@ -34,7 +34,7 @@ const ItemDetail = (props) => {
     };
 
 
-    fetch('http://localhost:3050/api/cart/', requestOptions)
+    fetch('http://node-mysql-phones-shop.herokuapp.com/api/cart/', requestOptions)
       .then(response => {
         if (response.status === 200) {
           props.reloadCartItems();

@@ -3,19 +3,18 @@ import './App.css';
 import Header from './components/Header'
 import HomePage from './pages/homePage/HomePage'
 import ItemDetailPage from './pages/itemDetailPage/ItemDetailPage';
-import { useFetch } from "./hooks/useFetch"
 
 function App() {
 
   const [idPhoneSelected, setIdPhoneSelected] = useState();
-  const [user, setUser] = useState({first_name:"User1", last_name:"LNUser1", id:1});
+  const [user, setUser] = useState({first_name:"Pedro", last_name:"Ramirez", id:5});
   const [cartItems, setCartItems] = useState(3);
 
   useEffect(() => {
     reloadCartItems();
   }, []);
   const reloadCartItems = () => {
-    fetch("http://localhost:3050/api/cart/" + user.id)
+    fetch("http://node-mysql-phones-shop.herokuapp.com/api/cart/" + user.id)
     .then(urlInfo => {
       return urlInfo.json();
     })
